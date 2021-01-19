@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <title>Ocarina</title>
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="ocarina">
+                <img src="images/ocarinaremove.png" alt="Ocarina">
+                <div class="controls">
+
+                    <div class="key" data-key="65">
+                        <kbd>A</kbd>
+                    </div>
+
+                    <div class="quebra">                 
+                        <div class="key" data-key="87">
+                            <kbd>W</kbd>                     
+                        </div>                    
+                        <div class="key" data-key="83">
+                            <kbd>S</kbd>
+                        </div>                
+                    </div>
+
+                    <div class="key" data-key="68">
+                        <kbd>D</kbd>
+                    </div>
+
+                    <div class="key" data-key="72">
+                        <kbd>H</kbd>
+                    </div>
+
+                    <div class="key" data-key="74">
+                        <kbd>J</kbd>
+                    </div>
+
+                    <div class="key" data-key="75">
+                        <kbd>K</kbd>
+                    </div>
+
+                </div>
+               
+            </div>
+
+            <audio src="sounds/fantasy1.mp3" data-key="65"></audio>
+            <audio src="sounds/fantasy2.mp3" data-key="87"></audio>
+            <audio src="sounds/fantasy3.mp3" data-key="83"></audio>
+            <audio src="sounds/fantasy4.mp3" data-key="68"></audio>
+            <audio src="sounds/magic1.mp3" data-key="72"></audio>
+            <audio src="sounds/magic2.mp3" data-key="74"></audio>
+            <audio src="sounds/magic3.mp3" data-key="75"></audio>
+
+            <script type="text/javascript">
+
+                window.addEventListener('keydown', function(e){
+                    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+                    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+                    
+                    if(!audio) return; // stop the function from running all together.
+                    audio.currentTime = 0;
+                    audio.play();
+                    key.classList.add('playing');
+                });
+
+                function removeTransition(e){
+                    if(e.propertyName !== 'transform') return; // skip it if it's not a transform.
+                    this.classList.remove('playing');
+                }
+
+                const keys = document.querySelectorAll('.key');
+                keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+            
+            </script>
+        </div>
+    </body>
+</html>
